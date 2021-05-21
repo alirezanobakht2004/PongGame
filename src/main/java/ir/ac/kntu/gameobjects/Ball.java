@@ -2,6 +2,7 @@ package ir.ac.kntu.gameobjects;
 
 import ir.ac.kntu.constants.GlobalConstants;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Ball implements GameObject{
     private double radius;
@@ -36,6 +37,8 @@ public class Ball implements GameObject{
     @Override
     public void draw(GraphicsContext gc) {
         //TODO complete
+        gc.setFill(Color.RED);
+        gc.fillOval(xPos, yPos, radius, radius);
 
     }
 
