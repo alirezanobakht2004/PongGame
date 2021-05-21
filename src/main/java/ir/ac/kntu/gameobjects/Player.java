@@ -48,6 +48,8 @@ public class Player implements GameObject{
                     yPos += step;
                     currentDir = Direction.DOWN;
                     break;
+                default:
+                    break;
             }
         }
     }
