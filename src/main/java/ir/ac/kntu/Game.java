@@ -96,17 +96,16 @@ public class Game extends Application {
             ball.setYSpeed(ball.getYSpeed() * (-1));
         }
         if (((ball.getPositionX() + BALL_RADIUS > playerTwo.getPositionX()) && ball.getPositionY() >=
-                playerTwo.getPositionY() && ball.getPositionY() <= playerTwo.getPositionY() +
-                PLAYER_HEIGHT) || ((ball.getPositionX() < playerOne.getPositionX() + PLAYER_WIDTH) &&
-                ball.getPositionY() >= playerOne.getPositionY() && ball.getPositionY() <= playerOne.getPositionY()
-                + PLAYER_HEIGHT)) {
-
+                playerTwo.getPositionY() && ball.getPositionY()<=playerTwo.getPositionY() + PLAYER_HEIGHT)
+                || ((ball.getPositionX() < playerOne.getPositionX() + PLAYER_WIDTH) &&
+                ball.getPositionY() >= playerOne.getPositionY() && ball.getPositionY() <= playerOne.getPositionY() + PLAYER_HEIGHT)) {
+            ball.setYSpeed((int) (Math.signum(ball.getYSpeed()) + ball.getYSpeed()));
+            ball.setXSpeed((int) (Math.signum(ball.getXSpeed()) + ball.getXSpeed()));
 
             ball.setXSpeed(ball.getXSpeed() * (-1));
+            ball.setYSpeed(ball.getYSpeed() * (-1));
         }
 
-        //TODO implement reflection logic of ball
-        //TODO draw player and computer
         gc.fillText(playerOneScore + "\t\t\t\t\t\t\t\t" + playerTwoScore, CANVAS_WIDTH / 2, 100);
         //draw player 1 & 2
 
