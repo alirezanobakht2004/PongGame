@@ -1,5 +1,6 @@
 package ir.ac.kntu.gamecontroller;
 
+import ir.ac.kntu.Game;
 import javafx.scene.input.KeyCode;
 
 
@@ -15,6 +16,7 @@ public class PlayerController implements InputManager {
 
     @Override
     public void handlePlayerMovements(KeyCode keyCode) {
+
         //TODO set controller
 
     }

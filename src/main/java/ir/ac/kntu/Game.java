@@ -12,6 +12,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -47,7 +48,7 @@ public class Game extends Application {
         tl.setCycleCount(Timeline.INDEFINITE);
         Scene scene = new Scene(new Pane(canvas));
         canvas.setOnMouseClicked(e ->  gameState = GameState.RUNNING);
-        EventHandler.getInstance().attachEventHandlers(scene);
+        canvas.setOnMouseMoved(e ->  playerOne.setYPos(e.getY()));
         stage.setScene(scene);
         stage.show();
         tl.play();
@@ -56,13 +57,18 @@ public class Game extends Application {
     public void start(GraphicsContext gc) {
         gc.setFill(Color.rgb(222, 117, 117));
         gc.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        gc.setFill(Color.WHITE);
+        gc.setFont(Font.font(25));
         if (gameState == GameState.RUNNING) {
             ball.setXPos(ball.getPositionX() + ball.getXSpeed());
             ball.setYPos(ball.getPositionY() + ball.getYSpeed());
 
-            playerTwo.setYPos(ball.getPositionY() > playerTwo.getPositionY() + PLAYER_HEIGHT / 2.0 ?
-                    playerTwo.getPositionY() + 3 : playerTwo.getPositionY() - 3);
-            ball.draw(gc);
+
+            if(ball.getPositionX()< CANVAS_WIDTH - CANVAS_WIDTH   / 4) {
+                playerTwo.setYPos(ball.getPositionY() - PLAYER_HEIGHT / 2);
+            }  else {
+
+            }
             } else {
             //TODO reset ball speed and position and set "click" label
             gc.strokeText("Click to start game", CANVAS_WIDTH / 2 - 30,
