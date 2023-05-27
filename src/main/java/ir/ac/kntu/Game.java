@@ -13,6 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -25,11 +26,10 @@ public class Game extends Application {
 
     private static Player playerOne;
     private static Player playerTwo;
-    private static Player computer;
     private static Ball ball;
     private GameState gameState;
-    private int playerScore = 0;
-    private int computerScore = 0;
+    private int playerOneScore = 0;
+    private int playerTwoScore = 0;
 
     public static void main(String[] args) {
         playerOne = new Player(false);
@@ -47,8 +47,8 @@ public class Game extends Application {
                 e -> start(gc)));
         tl.setCycleCount(Timeline.INDEFINITE);
         Scene scene = new Scene(new Pane(canvas));
-        canvas.setOnMouseClicked(e ->  gameState = GameState.RUNNING);
-        canvas.setOnMouseMoved(e ->  playerOne.setYPos(e.getY()));
+        canvas.setOnMouseClicked(e -> gameState = GameState.RUNNING);
+        canvas.setOnMouseMoved(e -> playerOne.setYPos(e.getY()));
         stage.setScene(scene);
         stage.show();
         tl.play();
@@ -56,21 +56,26 @@ public class Game extends Application {
 
     public void start(GraphicsContext gc) {
         gc.setFill(Color.rgb(222, 117, 117));
-        gc.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        gc.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         gc.setFill(Color.WHITE);
         gc.setFont(Font.font(25));
         if (gameState == GameState.RUNNING) {
             ball.setXPos(ball.getPositionX() + ball.getXSpeed());
             ball.setYPos(ball.getPositionY() + ball.getYSpeed());
 
-
-            if(ball.getPositionX()< CANVAS_WIDTH - CANVAS_WIDTH   / 4) {
+            if (ball.getPositionX() < CANVAS_WIDTH - CANVAS_WIDTH / 4) {
                 playerTwo.setYPos(ball.getPositionY() - PLAYER_HEIGHT / 2);
-            }  else {
-
-            }
             } else {
+                playerTwo.setYPos(ball.getPositionY() > playerTwo.getPositionY() +
+                        PLAYER_HEIGHT / 2 ? playerTwo.getPositionY() + 1 : playerTwo.getPositionY() - 1);
+            }
+
+            ball.draw(gc);
+        } else {
             //TODO reset ball speed and position and set "click" label
+            gc.setStroke(Color.WHITE);
+            gc.setTextAlign(TextAlignment.CENTER);
+
             gc.strokeText("Click to start game", CANVAS_WIDTH / 2 - 30,
                     GlobalConstants.CANVAS_HEIGHT / 2);
             ball.setXPos((double) CANVAS_WIDTH / 2);
@@ -79,22 +84,22 @@ public class Game extends Application {
             ball.setYSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
         }
 
-        if(ball.getPositionX() < playerOne.getPositionX() - PLAYER_WIDTH) {
-            computerScore++;
+        if (ball.getPositionX() < playerOne.getPositionX() - PLAYER_WIDTH) {
+            playerTwoScore++;
             gameState = GameState.FINISHED;
         }
-        if(ball.getPositionX() > playerTwo.getPositionX() + PLAYER_WIDTH) {
-            playerScore++;
+        if (ball.getPositionX() > playerTwo.getPositionX() + PLAYER_WIDTH) {
+            playerOneScore++;
             gameState = GameState.FINISHED;
         }
         if (ball.getPositionY() > CANVAS_HEIGHT - BALL_RADIUS || ball.getPositionY() < 0) {
             ball.setYSpeed(ball.getYSpeed() * (-1));
         }
-        if( ((ball.getPositionX() + BALL_RADIUS > playerTwo.getPositionX()) && ball.getPositionY() >=
+        if (((ball.getPositionX() + BALL_RADIUS > playerTwo.getPositionX()) && ball.getPositionY() >=
                 playerTwo.getPositionY() && ball.getPositionY() <= playerTwo.getPositionY() +
                 PLAYER_HEIGHT) || ((ball.getPositionX() < playerOne.getPositionX() + PLAYER_WIDTH) &&
                 ball.getPositionY() >= playerOne.getPositionY() && ball.getPositionY() <= playerOne.getPositionY()
-                + PLAYER_HEIGHT) ) {
+                + PLAYER_HEIGHT)) {
 
 
             ball.setXSpeed(ball.getXSpeed() * (-1));
@@ -102,6 +107,11 @@ public class Game extends Application {
 
         //TODO implement reflection logic of ball
         //TODO draw player and computer
+        gc.fillText(playerOneScore + "\t\t\t\t\t\t\t\t" + playerTwoScore, CANVAS_WIDTH / 2, 100);
+        //draw player 1 & 2
+
+        gc.fillRect(playerTwo.getPositionX(), playerTwo.getPositionY(), PLAYER_WIDTH, PLAYER_HEIGHT);
+        gc.fillRect(playerOne.getPositionX(), playerOne.getPositionY(), PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
     public static Player getPlayerOne() {
