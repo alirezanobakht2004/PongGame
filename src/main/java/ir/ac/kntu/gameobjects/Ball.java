@@ -22,7 +22,7 @@ public class Ball implements GameObject {
 
     @Override
     public void draw(GraphicsContext gc) {
-        gc.setFill(Color.GREEN);
+        gc.setFill(Color.WHITE);
         gc.fillOval(xPos, yPos, radius, radius);
     }
 

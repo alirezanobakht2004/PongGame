@@ -41,7 +41,7 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Pong-Game");
-        Canvas canvas = new Canvas(CANVAS_WIDTH, GlobalConstants.CANVAS_HEIGHT);
+        Canvas canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(10),
                 e -> start(gc)));
@@ -59,34 +59,7 @@ public class Game extends Application {
         gc.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         gc.setFill(Color.WHITE);
         gc.setFont(Font.font(25));
-        if (gameState == GameState.RUNNING) {
-            ball.setXPos(ball.getPositionX() + ball.getXSpeed());
-            ball.setYPos(ball.getPositionY() + ball.getYSpeed());
-
-            if (ball.getPositionX() < CANVAS_WIDTH - CANVAS_WIDTH / 4) {
-                playerTwo.setYPos(ball.getPositionY() - PLAYER_HEIGHT / 2);
-            } else {
-                playerTwo.setYPos(ball.getPositionY() > playerTwo.getPositionY() +
-                        PLAYER_HEIGHT / 2 ? playerTwo.getPositionY() + 1 : playerTwo.getPositionY() - 1);
-            }
-
-            ball.draw(gc);
-        } else {
-            gc.setStroke(Color.WHITE);
-            gc.setTextAlign(TextAlignment.CENTER);
-
-            gc.strokeText("Click to start game", CANVAS_WIDTH / 2 - 30,
-                    GlobalConstants.CANVAS_HEIGHT / 2);
-            ball.setXPos((double) CANVAS_WIDTH / 2);
-            ball.setYPos((double) CANVAS_HEIGHT / 2);
-            ball.setXSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
-            ball.setYSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
-        }
-
-        if (ball.getPositionX() < playerOne.getPositionX() - PLAYER_WIDTH) {
-            playerTwoScore++;
-            gameState = GameState.FINISHED;
-        }
+        startRunning(gc);
         if (ball.getPositionX() > playerTwo.getPositionX() + PLAYER_WIDTH) {
             playerOneScore++;
             gameState = GameState.FINISHED;
@@ -95,7 +68,7 @@ public class Game extends Application {
             ball.setYSpeed(ball.getYSpeed() * (-1));
         }
         if (((ball.getPositionX() + BALL_RADIUS > playerTwo.getPositionX()) && ball.getPositionY() >=
-                playerTwo.getPositionY() && ball.getPositionY()<=playerTwo.getPositionY() + PLAYER_HEIGHT)
+                playerTwo.getPositionY() && ball.getPositionY() <= playerTwo.getPositionY() + PLAYER_HEIGHT)
                 || ((ball.getPositionX() < playerOne.getPositionX() + PLAYER_WIDTH) &&
                 ball.getPositionY() >= playerOne.getPositionY() && ball.getPositionY() <= playerOne.getPositionY() + PLAYER_HEIGHT)) {
             ball.setYSpeed((int) (Math.signum(ball.getYSpeed()) + ball.getYSpeed()));
@@ -110,6 +83,35 @@ public class Game extends Application {
 
         gc.fillRect(playerTwo.getPositionX(), playerTwo.getPositionY(), PLAYER_WIDTH, PLAYER_HEIGHT);
         gc.fillRect(playerOne.getPositionX(), playerOne.getPositionY(), PLAYER_WIDTH, PLAYER_HEIGHT);
+    }
+
+    public void startRunning(GraphicsContext gc) {
+        if (gameState == GameState.RUNNING) {
+            ball.setXPos(ball.getPositionX() + ball.getXSpeed());
+            ball.setYPos(ball.getPositionY() + ball.getYSpeed());
+
+            if (ball.getPositionX() < CANVAS_WIDTH - CANVAS_WIDTH / 4) {
+                playerTwo.setYPos(ball.getPositionY() - PLAYER_HEIGHT / 2);
+            } else {
+                playerTwo.setYPos(ball.getPositionY() > playerTwo.getPositionY() +
+                        PLAYER_HEIGHT / 2 ? playerTwo.getPositionY() + 1 : playerTwo.getPositionY() - 1);
+            }
+            ball.draw(gc);
+        } else {
+            gc.setStroke(Color.WHITE);
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.strokeText("Click to start game", CANVAS_WIDTH / 2 - 30,
+                    GlobalConstants.CANVAS_HEIGHT / 2);
+            ball.setXPos((double) CANVAS_WIDTH / 2);
+            ball.setYPos((double) CANVAS_HEIGHT / 2);
+            ball.setXSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
+            ball.setYSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
+        }
+
+        if (ball.getPositionX() < playerOne.getPositionX() - PLAYER_WIDTH) {
+            playerTwoScore++;
+            gameState = GameState.FINISHED;
+        }
     }
 
     public static Player getPlayerOne() {
