@@ -1,6 +1,7 @@
 package ir.ac.kntu;
 
 import ir.ac.kntu.constants.GlobalConstants;
+import ir.ac.kntu.gamecontroller.EventHandler;
 import ir.ac.kntu.gameobjects.Ball;
 import ir.ac.kntu.gameobjects.Player;
 import javafx.animation.KeyFrame;
@@ -19,7 +20,8 @@ import static ir.ac.kntu.constants.GlobalConstants.*;
 
 public class Game extends Application {
 
-    private static Player player;
+    private static Player playerOne;
+    private static Player playerTwo;
     private static Player computer;
     private static Ball ball;
     private GameState gameState;
@@ -27,8 +29,8 @@ public class Game extends Application {
     private int computerScore = 0;
 
     public static void main(String[] args) {
-        player = new Player(false);
-        computer = new Player(true);
+        playerOne = new Player(false);
+        playerTwo = new Player(true);
         ball = new Ball(1, 1);
         launch(args);
     }
@@ -43,8 +45,7 @@ public class Game extends Application {
         tl.setCycleCount(Timeline.INDEFINITE);
         Scene scene = new Scene(new Pane(canvas));
         canvas.setOnMouseClicked(e ->  gameState = GameState.RUNNING);
-        //TODO attach EventHandler
-
+        EventHandler.getInstance().attachEventHandlers(scene);
         stage.setScene(scene);
         stage.show();
         tl.play();
