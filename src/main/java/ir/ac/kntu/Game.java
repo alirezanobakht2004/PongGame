@@ -79,7 +79,6 @@ public class Game extends Application {
         }
 
         gc.fillText(playerOneScore + "\t\t\t\t\t\t\t\t" + playerTwoScore, CANVAS_WIDTH / 2, 100);
-        //draw player 1 & 2
 
         gc.fillRect(playerTwo.getPositionX(), playerTwo.getPositionY(), PLAYER_WIDTH, PLAYER_HEIGHT);
         gc.fillRect(playerOne.getPositionX(), playerOne.getPositionY(), PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -112,9 +111,5 @@ public class Game extends Application {
             playerTwoScore++;
             gameState = GameState.FINISHED;
         }
-    }
-
-    public static Player getPlayerOne() {
-        return playerOne;
     }
 }
