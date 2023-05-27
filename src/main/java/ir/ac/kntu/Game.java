@@ -72,7 +72,6 @@ public class Game extends Application {
 
             ball.draw(gc);
         } else {
-            //TODO reset ball speed and position and set "click" label
             gc.setStroke(Color.WHITE);
             gc.setTextAlign(TextAlignment.CENTER);
 

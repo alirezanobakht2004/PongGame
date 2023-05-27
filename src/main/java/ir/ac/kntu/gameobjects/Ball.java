@@ -4,14 +4,12 @@ import ir.ac.kntu.constants.GlobalConstants;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Ball implements GameObject{
+public class Ball implements GameObject {
     private double radius;
     private double xPos;
     private double yPos;
     private int xSpeed;
     private int ySpeed;
-    private int layer;
-    private int scale;
 
     public Ball(int xSpeed, int ySpeed) {
         this.radius = GlobalConstants.BALL_RADIUS;
@@ -19,30 +17,13 @@ public class Ball implements GameObject{
         this.yPos = GlobalConstants.BALL_FIRST_POS_Y;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
-        this.layer = 1;
-        this.scale = 1;
     }
 
-
-    @Override
-    public boolean isColliding(GameObject b) {
-        return false;
-    }
-
-    @Override
-    public boolean isPlayerCollisionFriendly() {
-        return false;
-    }
 
     @Override
     public void draw(GraphicsContext gc) {
         gc.setFill(Color.GREEN);
-        gc.fillOval(xPos,yPos,radius,radius);
-    }
-
-    @Override
-    public void removeFromScene() {
-
+        gc.fillOval(xPos, yPos, radius, radius);
     }
 
     @Override
@@ -53,16 +34,6 @@ public class Ball implements GameObject{
     @Override
     public double getPositionY() {
         return yPos;
-    }
-
-    @Override
-    public int getLayer() {
-        return layer;
-    }
-
-    @Override
-    public int getScale() {
-        return scale;
     }
 
     public void setXPos(double xPos) {

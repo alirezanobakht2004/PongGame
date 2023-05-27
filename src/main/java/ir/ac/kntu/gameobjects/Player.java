@@ -8,15 +8,13 @@ import javafx.scene.paint.Color;
 import static ir.ac.kntu.constants.GlobalConstants.PLAYER_HEIGHT;
 import static ir.ac.kntu.constants.GlobalConstants.PLAYER_WIDTH;
 
-public class Player implements GameObject{
+public class Player implements GameObject {
     private int height;
     private int width;
     private boolean isComputer;
     private double xPos;
     private double yPos;
-    private Direction currentDir;
-    private int layer;
-    private int scale;
+
 
     public Player(boolean isComputer) {
         this.isComputer = isComputer;
@@ -29,41 +27,15 @@ public class Player implements GameObject{
             this.xPos = GlobalConstants.PLAYER_FIRST_POS_X;
             this.yPos = GlobalConstants.PLAYER_FIRST_POS_Y;
         }
-        this.currentDir = Direction.DOWN;
-        this.layer = 1;
-        this.scale = 1;
     }
 
-    public void move(int step, Direction direction) {
-        if (step != 0) {
-            switch (direction) {
-                case UP -> yPos -= step;
-                case DOWN -> yPos += step;
-            }
-        }
-
-    }
-
-    @Override
-    public boolean isColliding(GameObject b) {
-        return false;
-    }
-
-    @Override
-    public boolean isPlayerCollisionFriendly() {
-        return false;
-    }
 
     @Override
     public void draw(GraphicsContext gc) {
         gc.setFill(Color.YELLOW);
-        gc.fillRect(xPos, yPos,PLAYER_WIDTH , PLAYER_HEIGHT);
+        gc.fillRect(xPos, yPos, PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
-    @Override
-    public void removeFromScene() {
-
-    }
 
     @Override
     public double getPositionX() {
@@ -75,15 +47,6 @@ public class Player implements GameObject{
         return yPos;
     }
 
-    @Override
-    public int getLayer() {
-        return layer;
-    }
-
-    @Override
-    public int getScale() {
-        return scale;
-    }
 
     public void setXPos(double xPos) {
         this.xPos = xPos;
