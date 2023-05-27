@@ -3,6 +3,7 @@ package ir.ac.kntu.gameobjects;
 import ir.ac.kntu.constants.Direction;
 import ir.ac.kntu.constants.GlobalConstants;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import static ir.ac.kntu.constants.GlobalConstants.PLAYER_HEIGHT;
 import static ir.ac.kntu.constants.GlobalConstants.PLAYER_WIDTH;
@@ -34,7 +35,12 @@ public class Player implements GameObject{
     }
 
     public void move(int step, Direction direction) {
-        //TODO complete
+        if (step != 0) {
+            switch (direction) {
+                case UP -> yPos -= step;
+                case DOWN -> yPos += step;
+            }
+        }
 
     }
 
@@ -50,8 +56,8 @@ public class Player implements GameObject{
 
     @Override
     public void draw(GraphicsContext gc) {
-        //TODO complete
-
+        gc.setFill(Color.YELLOW);
+        gc.fillRect(xPos, yPos,PLAYER_WIDTH , PLAYER_HEIGHT);
     }
 
     @Override

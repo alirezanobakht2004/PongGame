@@ -81,6 +81,19 @@ public class Game extends Application {
             playerScore++;
             gameState = GameState.FINISHED;
         }
+        if (ball.getPositionY() > CANVAS_HEIGHT - BALL_RADIUS || ball.getPositionY() < 0) {
+            ball.setYSpeed(ball.getYSpeed() * (-1));
+        }
+        if( ((ball.getPositionX() + BALL_RADIUS > playerTwo.getPositionX()) && ball.getPositionY() >=
+                playerTwo.getPositionY() && ball.getPositionY() <= playerTwo.getPositionY() +
+                PLAYER_HEIGHT) || ((ball.getPositionX() < playerOne.getPositionX() + PLAYER_WIDTH) &&
+                ball.getPositionY() >= playerOne.getPositionY() && ball.getPositionY() <= playerOne.getPositionY()
+                + PLAYER_HEIGHT) ) {
+
+
+            ball.setXSpeed(ball.getXSpeed() * (-1));
+        }
+
         //TODO implement reflection logic of ball
         //TODO draw player and computer
     }
