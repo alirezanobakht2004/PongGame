@@ -52,11 +52,12 @@ public class Game extends Application {
     }
 
     public void start(GraphicsContext gc) {
-        gc.setFill(Color.rgb(255, 255, 255));
+        gc.setFill(Color.rgb(222, 117, 117));
         gc.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
         if (gameState == GameState.RUNNING) {
-            //TODO make ball moving and draw it
-            //computer playing
+            ball.setXPos(ball.getPositionX() + ball.getXSpeed());
+            ball.setYPos(ball.getPositionY() + ball.getYSpeed());
+
             if(ball.getPositionX() < CANVAS_WIDTH - CANVAS_WIDTH  / 4) {
                 computer.setYPos(ball.getPositionY()-PLAYER_HEIGHT / 2);
             }  else {
