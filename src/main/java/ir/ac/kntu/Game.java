@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
+import java.util.Random;
+
 import static ir.ac.kntu.constants.GlobalConstants.*;
 
 public class Game extends Application {
@@ -58,22 +60,24 @@ public class Game extends Application {
             ball.setXPos(ball.getPositionX() + ball.getXSpeed());
             ball.setYPos(ball.getPositionY() + ball.getYSpeed());
 
-            if(ball.getPositionX() < CANVAS_WIDTH - CANVAS_WIDTH  / 4) {
-                computer.setYPos(ball.getPositionY()-PLAYER_HEIGHT / 2);
-            }  else {
-                computer.setYPos(ball.getPositionY() > computer.getPositionY()+PLAYER_HEIGHT / 2?
-                        computer.getPositionY()+1: computer.getPositionY() - 1);
-            }
-        } else {
+            playerTwo.setYPos(ball.getPositionY() > playerTwo.getPositionY() + PLAYER_HEIGHT / 2.0 ?
+                    playerTwo.getPositionY() + 3 : playerTwo.getPositionY() - 3);
+            ball.draw(gc);
+            } else {
             //TODO reset ball speed and position and set "click" label
-            gc.strokeText("Click", CANVAS_WIDTH / 2 - 30,
+            gc.strokeText("Click to start game", CANVAS_WIDTH / 2 - 30,
                     GlobalConstants.CANVAS_HEIGHT / 2);
+            ball.setXPos((double) CANVAS_WIDTH / 2);
+            ball.setYPos((double) CANVAS_HEIGHT / 2);
+            ball.setXSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
+            ball.setYSpeed(new Random().nextInt(2) == 0 ? 1 : -1);
         }
-        if(ball.getPositionX() < player.getPositionX() - PLAYER_WIDTH) {
+
+        if(ball.getPositionX() < playerOne.getPositionX() - PLAYER_WIDTH) {
             computerScore++;
             gameState = GameState.FINISHED;
         }
-        if(ball.getPositionX() > computer.getPositionX() + PLAYER_WIDTH) {
+        if(ball.getPositionX() > playerTwo.getPositionX() + PLAYER_WIDTH) {
             playerScore++;
             gameState = GameState.FINISHED;
         }
@@ -81,7 +85,7 @@ public class Game extends Application {
         //TODO draw player and computer
     }
 
-    public static Player getPlayer() {
-        return player;
+    public static Player getPlayerOne() {
+        return playerOne;
     }
 }
